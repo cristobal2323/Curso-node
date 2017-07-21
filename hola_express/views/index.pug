@@ -1,5 +1,12 @@
 html
-  head
-    title= title
-  body
-    h1= message
+	head
+		title= title
+	body
+		// este es un comentario
+		-	var arreglo = [1,2,3,4,5];
+		-	for (var i = arreglo.length - 1; i >= 0; i--)
+			p= arreglo[i]
+			p hola #{arreglo[i]}
+			p.
+				hola haz click en #[a(href="codigofacilito.com") este link]
+	h1= message
