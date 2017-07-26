@@ -1,7 +1,7 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var app = express();
 var User = require("./models/user").User;
+var app = express();
 
 app.set('view engine', 'pug');
 
@@ -25,15 +25,18 @@ app.post("/users", function(req, res, next){
 
 	  user.email = req.body.email;
 	  user.password= req.body.password;
+	  user.password_confirmation = req.body.password_confirmation;
 
-  user.save((err, user) => {
-    if(err) {
-      res.send('error saving book');
-    } else {
-      console.log(user);
-      res.send("Estamos");
-    }
-  })
+	  console.log(user.password_confirmation);
+
+	  user.save((err, user) => {
+	    if(err) {
+	      console.log(err);
+	    } else {
+	      console.log(user);
+	      res.send("Estamos");
+	    }
+	  })
 })
 
 app.listen(8080);
