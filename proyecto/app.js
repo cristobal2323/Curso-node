@@ -14,30 +14,41 @@ app.get('/', function (req, res) {
 })
 
 app.get('/login', function (req, res) {
+	res.render('login');
+})
+
+app.get('/signup', function (req, res) {
 	User.find((err,doc)=>{
 		console.log(doc)
-		res.render('login');
+		res.render('signup');
 	})
 })
 
 app.post("/users", function(req, res, next){
 	let user = new User();
 
-	  user.email = req.body.email;
-	  user.password= req.body.password;
-	  user.username= req.body.username;
-	  user.password_confirmation = req.body.password_confirmation;
+	user.email = req.body.email;
+	user.password= req.body.password;
+	user.username= req.body.username;
+	user.password_confirmation = req.body.password_confirmation;
 
-	  console.log(user.password_confirmation);
+	console.log(user.password_confirmation);
 
-	  user.save().then((us)=>{
-	  	res.send("guardamos el usuario exitosamente");
-	  },(err)=>{
-	  	if(err){
-	  		console.log(err);
-	  		res.send("no pudimos envíar la información");
-	  	}
-	  })
+	user.save().then((us)=>{
+		res.send("guardamos el usuario exitosamente");
+	},(err)=>{
+		if(err){
+			console.log(err);
+			res.send("no pudimos envíar la información");
+		}
+	})
+})
+
+app.post("/sessions", function(req, res, next){
+	User.findOne({email:req.body.email,password:req.body.password},(err,doc)=>{
+		console.log(doc)
+		res.send('logeado');
+	})
 })
 
 app.listen(8080);
