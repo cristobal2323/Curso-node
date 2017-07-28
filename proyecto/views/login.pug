@@ -1,11 +1,14 @@
 extends ./layout.pug
 block contenido
-	form(action="/sessions", method="post")
-		div(class="form-group")
-			label(for="email") Email
-			input(type="text", name="email", id="email" placeholder="email",class="form-control")
-		div(class="form-group")
-			label(for="password") Pass
-			input(type="password", name="password", id="password",class="form-control")
-		div(class="form-group")
-			input(type="submit",value="Iniciar Sesión", class="btn btn-info")
+	div(class="cold-md-8 remove-float center-block text-center big-top-space")
+		form(action="/sessions", method="post")
+			div(class="form-group")
+				label(for="email") Email
+				input(type="text", name="email", id="email" placeholder="email",class="form-control")
+			div(class="form-group")
+				label(for="password") Pass
+				input(type="password", name="password", id="password",class="form-control")
+			div(class="form-group")
+				input(type="submit",value="Iniciar Sesión", class="btn btn-info")
+			div(class="form-group")
+				a(href="/signup") No tengo usuario
