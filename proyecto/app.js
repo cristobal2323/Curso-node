@@ -30,13 +30,13 @@ app.post("/users", function(req, res, next){
 
 	  console.log(user.password_confirmation);
 
-	  user.save((err, user) => {
-	    if(err) {
-	      console.log(err);
-	    } else {
-	      console.log(user);
-	      res.send("Estamos");
-	    }
+	  user.save().then((us)=>{
+	  	res.send("guardamos el usuario exitosamente");
+	  },(err)=>{
+	  	if(err){
+	  		console.log(err);
+	  		res.send("no pudimos envíar la información");
+	  	}
 	  })
 })
 
