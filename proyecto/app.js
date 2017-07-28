@@ -25,6 +25,7 @@ app.post("/users", function(req, res, next){
 
 	  user.email = req.body.email;
 	  user.password= req.body.password;
+	  user.username= req.body.username;
 	  user.password_confirmation = req.body.password_confirmation;
 
 	  console.log(user.password_confirmation);
