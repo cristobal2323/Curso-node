@@ -2,41 +2,38 @@ var express = require("express");
 var router = express.Router();
 var Imagen = require("./models/imagenes");
 
+var image_finder_middleware = require("./middlewares/find_image");
+
 router.get("/", function(req,res){
 	res.render("app/home")
 })
 
+router.all("/imagenes/:id*",image_finder_middleware);
 
-router.get("/imagenes/new", function(req,res){
+
+router.get("/imagenes-new", function(req,res){
 	res.render("app/imagenes/new")
 })
 
 router.get("/imagenes/:id/edit", function(req,res){
-	Imagen.findById(req.params.id,(err,imagen)=>{
-		res.render("app/imagenes/edit",{imagen:imagen})
-	})
+	res.render("app/imagenes/edit")
 })
 
 
 router.route("/imagenes/:id")
 	.get((req,res)=>{
-		Imagen.findById(req.params.id,(err,imagen)=>{
-			res.render("app/imagenes/show",{imagen:imagen})
-		})
+		res.render("app/imagenes/show")
+		
 	})
 	.put((req,res)=>{
-		Imagen.findById(req.params.id,(err,imagen)=>{
-			imagen.title = req.body.title;
-			
-			imagen.save().then((us)=>{
-				res.render("app/imagenes/show",{imagen:imagen})
-			},(err)=>{
-				if(err){
-					console.log(err)
-					res.redirect("/app/imagenes/"+imagen._id+"/edit",{imagen:imagen});
-				}
-			})
-			
+		res.locals.imagen.title = req.body.title;		
+		res.locals.imagen.save().then((us)=>{
+			res.render("app/imagenes/show")
+		},(err)=>{
+			if(err){
+				console.log(err)
+				res.redirect("/app/imagenes/"+req.params.id+"/edit");
+			}
 		})
 	})
 	.delete((req,res)=>{
@@ -52,14 +49,16 @@ router.route("/imagenes/:id")
 
 router.route("/imagenes")
 	.get((req,res)=>{
-		Imagen.find({},(err,imagenes)=>{
+		Imagen.find({creator:res.locals.user._id},(err,imagenes)=>{
 			if(err){res.redirect("/app"); return;}
 			res.render("app/imagenes/index",{imagenes: imagenes})
 		})
 	})
 	.post((req,res)=>{
+		console.log(res.locals.user._id)
 		var data = {
-			title: req.body.title
+			title: req.body.title,
+			creator : res.locals.user._id
 		};
 
 		var imagen = new Imagen(data);
@@ -68,6 +67,7 @@ router.route("/imagenes")
 			res.redirect("/app/imagenes/"+imagen._id);
 		},(err)=>{
 			if(err){
+				console.log(imagen)
 				console.log(err)
 				//res.render(err);
 			}

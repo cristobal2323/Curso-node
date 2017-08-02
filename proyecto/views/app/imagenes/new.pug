@@ -2,7 +2,7 @@ extends ../../layout.pug
 block contenido
 	div(class="cold-md-8 remove-float center-block text-center big-top-space")
 		h1 Subir nueva imagen
-		form(action="/app/imagenes", method="post")
+		form(action="/app/imagenes", method="POST")
 			div(class="form-group")
 				label(for="title") title
 				input(type="text", name="title", id="title" placeholder="title",class="form-control")
