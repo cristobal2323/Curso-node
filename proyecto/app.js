@@ -4,6 +4,7 @@ var User = require("./models/user").User;
 var cookieSession = require("cookie-session");
 var router_app = require("./routes_app");
 var session_middleware = require("./middlewares/session");
+var methodOverride = require("method-override");
 var app = express();
 
 app.set('view engine', 'pug');
@@ -11,6 +12,7 @@ app.set('view engine', 'pug');
 app.use("/public", express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 
 // app.use(session({
 // 	secret: "2918739182u3n",

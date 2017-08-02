@@ -1,0 +1,13 @@
+extends ../../layout.pug
+block contenido
+	div(class="cold-md-8 remove-float center-block text-center big-top-space")
+		h1 Subir nueva imagen
+		form(action="/app/imagenes/"+imagen._id+"?_method=PUT" , method="post")
+			div(class="form-group")
+				label(for="title") title
+				input(type="text", name="title", id="title", placeholder="title",class="form-control", value=imagen.title)
+			div(class="form-group")
+				label(for="archivo") Imagen
+				input(type="file", name="archivo", id="archivo",class="form-control")
+			div(class="form-group")
+				input(type="submit",value="editar", class="btn btn-info")
